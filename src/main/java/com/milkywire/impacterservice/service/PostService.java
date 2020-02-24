@@ -6,6 +6,7 @@ import com.milkywire.impacterservice.dto.PostDto;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,10 @@ public class PostService {
 
     public void deletePost(int postId) {
         postDao.delete(postId);
+    }
+
+    public List<PostDto> mapToDtoList(List<Post> domainList) {
+        return domainList.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     public PostDto mapToDto(Post domain) {

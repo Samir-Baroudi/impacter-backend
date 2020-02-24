@@ -4,7 +4,6 @@ import com.milkywire.impacterservice.domain.Post;
 import com.milkywire.impacterservice.dto.PostDto;
 import com.milkywire.impacterservice.service.PostService;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,18 +30,16 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public List<PostDto> getAll() {
         List<Post> posts = postService.getAllPosts();
-        List<PostDto> postDtoList = posts.stream().map(postService::mapToDto).collect(Collectors.toList());
 
-        return postDtoList;
+        return postService.mapToDtoList(posts);
     }
 
     @GetMapping("/impacters/{" + IMPACTER_ID + "}/all")
     @ResponseStatus(HttpStatus.OK)
     public List<PostDto> getAllForImpacter(@PathVariable(IMPACTER_ID) int impacterId) {
         List<Post> posts = postService.getAllForImpacter(impacterId);
-        List<PostDto> postDtoList = posts.stream().map(postService::mapToDto).collect(Collectors.toList());
 
-        return postDtoList;
+        return postService.mapToDtoList(posts);
     }
 
     @GetMapping("/{" + POST_ID + "}/impacters/{" + IMPACTER_ID + "}")
@@ -77,7 +74,7 @@ public class PostController {
 
     @DeleteMapping(value = "/{" + POST_ID + "}/delete")
     @ResponseStatus(value = HttpStatus.OK)
-    public void DeletePost(@PathVariable(POST_ID) int postId) {
+    public void deletePost(@PathVariable(POST_ID) int postId) {
         if (postId > 0) {
             postService.deletePost(postId);
         }
