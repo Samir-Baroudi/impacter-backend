@@ -4,9 +4,7 @@ import com.milkywire.impacterservice.dao.PostDao;
 import com.milkywire.impacterservice.domain.Post;
 import com.milkywire.impacterservice.dto.PostDto;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
@@ -52,7 +50,7 @@ public class PostService {
         dto.setData(domain.getData());
         dto.setReactionCount(domain.getReactionCount());
         dto.setImpacterId(domain.getImpacterId());
-        dto.setPublishedAt(getDatePresentation(domain.getPublishedAt()));
+        dto.setPublishedAt(domain.getPublishedAt());
 
         return dto;
     }
@@ -66,27 +64,8 @@ public class PostService {
         domain.setData(dto.getData());
         domain.setReactionCount(dto.getReactionCount());
         domain.setImpacterId(dto.getImpacterId());
-        domain.setPublishedAt(getDateFromPresentation(dto.getPublishedAt()));
+        domain.setPublishedAt(dto.getPublishedAt());
 
         return domain;
-    }
-
-    private String getDatePresentation(Date dateTs) {
-        if (dateTs != null) {
-            return DATE_FORMAT.format(dateTs);
-        }
-
-        return null;
-    }
-
-    private Date getDateFromPresentation(String datePresentation) {
-        if (datePresentation != null) {
-            try {
-                return DATE_FORMAT.parse(datePresentation);
-            } catch (ParseException e) {
-            }
-        }
-
-        return null;
     }
 }

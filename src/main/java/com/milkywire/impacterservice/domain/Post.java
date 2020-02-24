@@ -1,6 +1,5 @@
 package com.milkywire.impacterservice.domain;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data
@@ -12,6 +11,6 @@ public class Post {
     private String status;
     private String data;
     private int reactionCount;
-    private long impacterId;
-    private Date publishedAt;
+    private int impacterId;
+    private long publishedAt;
 }

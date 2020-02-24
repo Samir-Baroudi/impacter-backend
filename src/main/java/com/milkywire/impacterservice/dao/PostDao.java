@@ -4,6 +4,7 @@ import com.milkywire.impacterservice.domain.Post;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -92,9 +93,16 @@ public class PostDao {
             post.setData(rs.getString("data"));
             post.setReactionCount(rs.getInt("reaction_count"));
             post.setImpacterId(rs.getInt("impacter_id"));
-            post.setPublishedAt(rs.getDate("published_at"));
+            post.setPublishedAt(getTimestampOrZero(rs.getTimestamp("published_at")));
 
             return post;
+        }
+
+        private long getTimestampOrZero(Timestamp timestamp) {
+            if (timestamp == null) {
+                return 0;
+            }
+            return timestamp.getTime();
         }
     }
 }
